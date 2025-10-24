@@ -11,6 +11,9 @@ The primary goal of this analysis is to:
 3.  **Determine** the distribution of sales across different pizza categories and sizes.
 4.  **Identify** the top 5 and bottom 5 best-selling pizzas based on revenue, orders, and quantity sold.
 
+   ![Pizza1_sales_Analysis](https://github.com/Megha-karn/Capstone_Pizza_Sales_Analysis/blob/main/images/pizza1.png) 
+   
+
 ## 📊 Key Metrics & KPIs
 
 The following core business metrics were calculated from the sales data:
@@ -84,6 +87,7 @@ The analysis assumes a single table named `pizza_sales` within a database called
 | **pizza_category** | VARCHAR | Category of the pizza (e.g., 'Chicken', 'Classic'). |
 | **pizza_name** | VARCHAR | Full name of the pizza. |
 
+![best/worst_seller](images/pizza2.png)
 ## 🚀 Getting Started
 
 To replicate this analysis, you will need a SQL database (e.g., SQL Server, MySQL, PostgreSQL) and a dataset matching the inferred schema above.
