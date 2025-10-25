@@ -1,103 +1,114 @@
 # 🍕 Pizza Sales Analysis
 
-This repository contains a comprehensive SQL-based analysis of pizza sales data. The project aims to derive key business insights by calculating important metrics, analyzing sales trends, and identifying top-performing and underperforming pizza varieties.
+![pizza_sales_analysis](images/pizza1.png)
+## 📊 Project Overview
+This project involves a detailed analysis of pizza sales data to uncover key business insights using **SQL** for data aggregation and **Power BI** for interactive visualisation. The goal is to evaluate sales performance, identify product trends, and understand customer behaviour to support strategic business decisions.
 
-## 🎯 Project Overview
-
-The primary goal of this analysis is to:
-
-1.  **Calculate** key performance indicators (KPIs) such as total revenue, total orders, and average order value.
-2.  **Analyze** sales trends over different time periods (weekly and monthly).
-3.  **Determine** the distribution of sales across different pizza categories and sizes.
-4.  **Identify** the top 5 and bottom 5 best-selling pizzas based on revenue, orders, and quantity sold.
-
-   ![Pizza1_sales_Analysis](https://github.com/Megha-karn/Capstone_Pizza_Sales_Analysis/blob/main/images/pizza1.png) 
-   
-
-## 📊 Key Metrics & KPIs
-
-The following core business metrics were calculated from the sales data:
-
-| Metric | SQL Calculation |
-| :--- | :--- |
-| **Total Revenue** | `SUM(total_price)` |
-| **Total Orders** | `COUNT(DISTINCT order_id)` |
-| **Total Pizzas Sold** | `SUM(quantity)` |
-| **Average Order Value (AOV)** | `SUM(total_price) / COUNT(DISTINCT order_id)` |
-| **Average Pizzas Per Order** | `SUM(quantity) / COUNT(DISTINCT order_id)` |
-
-## ⚙️ SQL Queries & Analysis
-
-The `pizza_sales.sql` file contains all the queries used for the analysis, which are grouped by the insights they provide.
-
-### 1. Key Performance Indicators (KPIs)
-
-Queries to establish the foundational business numbers:
-
-* `Total_Revenue`
-* `Total_Order`
-* `Total_pizzas_sold`
-* `Average_Order_Value`
-* `Avg_Pizzas_Per_order`
-
-### 2. Time-Based Trend Analysis
-
-Queries to identify sales patterns and seasonality:
-
-* `Weekly Trend for total orders`: Analyzes order frequency by day of the week (`DATENAME(DW, order_date)`).
-* `Monthly Trend for Total Orders`: Analyzes order frequency by month (`DATENAME(MONTH, order_id)`).
-
-### 3. Sales Segmentation Analysis
-
-Queries to understand which categories and sizes contribute most to sales:
-
-* `% of Sales by Pizza category`: Calculates the percentage share of revenue for each pizza category.
-* `% of Sales by pizza size`: Calculates the percentage share of revenue for each pizza size.
-* `Total pizzas Sold by pizza category`: Sums the quantity sold per pizza category.
-
-### 4. Best & Worst Sellers
-
-Queries to identify top-performing and underperforming products:
-
-| Metric | Analysis Type | Query Filtering |
-| :--- | :--- | :--- |
-| **Revenue** | Top 5 & Bottom 5 | `ORDER BY Total_revenue DESC/ASC` |
-| **Total Orders** | Top 5 & Bottom 5 | `ORDER BY total_orders DESC/ASC` |
-| **Total Quantity** | Top 5 & Bottom 5 | `ORDER BY total_quantity DESC/ASC` |
+### 🧠 Objectives
+* Calculate core Key Performance Indicators (**KPIs**): Total Revenue, Total Orders, Total Pizzas Sold, Average Order Value (AOV), and Average Pizzas per Order.
+* Identify the **best and worst performing pizzas** by revenue and orders.
+* Analyze sales distribution by **pizza category and size**.
+* Evaluate **weekly and monthly order trends** to identify peak and dip periods.
 
 ---
 
-## 🛠 Database Structure
+## 🗂️ Dataset Information
+| Column Name | Description |
+| :--- | :--- |
+| `order_id` | Unique identifier for each order |
+| `pizza_name_id` | Unique pizza identifier |
+| `quantity` | Number of pizzas ordered |
+| `order_date` | Date of order |
+| `order_time` | Time of order |
+| `unit_price` | Price per pizza |
+| `total_price` | Total order value |
+| `pizza_category` | Type of pizza (Classic, Supreme, Veggie, etc.) |
+| `pizza_size` | Size of pizza (S, M, L, XL, XXL) |
+| `pizza_name` | Full name of the pizza |
 
-The analysis assumes a single table named `pizza_sales` within a database called `Pizza_db`.
+* **File:** `pizza_sales.csv`
+* **Total Rows:** ~4,800
 
-### `pizza_sales` Table Schema (Inferred)
+---
 
-| Column Name | Data Type (Inferred) | Description |
-| :--- | :--- | :--- |
-| **pizza_id** | INT | Unique identifier for the pizza entry. |
-| **order_id** | INT | Unique identifier for the customer order. |
-| **pizza_name_id** | VARCHAR | ID for the specific pizza name. |
-| **quantity** | INT | Number of pizzas of this type sold in the order. |
-| **order_date** | DATE | The date the order was placed. |
-| **order_time** | TIME | The time the order was placed. |
-| **unit_price** | DECIMAL | Price of a single pizza. |
-| **total_price** | DECIMAL | `quantity * unit_price` (Revenue). |
-| **pizza_size** | VARCHAR | Size of the pizza (e.g., 'S', 'M', 'L'). |
-| **pizza_category** | VARCHAR | Category of the pizza (e.g., 'Chicken', 'Classic'). |
-| **pizza_name** | VARCHAR | Full name of the pizza. |
+![best/worst sellers](images/pizza2.png)
 
-![best/worst_seller](images/pizza2.png)
-## 🚀 Getting Started
+## 🧮 SQL Analysis
+The analysis utilises SQL for data extraction and aggregation, forming the foundation for the Power BI dashboard. All queries are contained within the [`pizza_sales.sql`](pizza_sales.sql) file.
 
-To replicate this analysis, you will need a SQL database (e.g., SQL Server, MySQL, PostgreSQL) and a dataset matching the inferred schema above.
+### Key Analytical Queries
+#### 1. Sales KPIs
+* **Total Revenue:** `SELECT SUM(total_price) AS Total_Revenue FROM pizza_sales;`
+* **Total Orders:** `SELECT COUNT(DISTINCT order_id) AS Total_Orders FROM pizza_sales;`
+* **Average Order Value (AOV):** `SELECT SUM(total_price) / COUNT(DISTINCT order_id) AS Avg_Order_Value FROM pizza_sales;`
 
-1.  **Create the Database:**
-    ```sql
-    CREATE DATABASE Pizza_db;
-    USE Pizza_db;
-    ```
-2.  **Import Data:** Import your sales data into a table named `pizza_sales`.
-3.  **Run Queries:** Execute the commands from the `pizza_sales.sql` file.
+#### 2. Trend Analysis
+* **Weekly Trend:** Orders grouped by `order_day` to find peak sales days.
+* **Monthly Trend:** Orders grouped by `order_month` to analyze seasonal or monthly performance.
 
-Feel free to connect or contribute if you have suggestions for further analysis!
+#### 3. Distribution Analysis
+* **% of Sales by Pizza Category:** Calculation of the revenue share for each pizza category.
+* **% of Sales by Pizza Size:** Calculation of the revenue share for each pizza size.
+
+#### 4. Top & Bottom Performers
+* **Top 5 Best/Worst Sellers:** Identification of the pizzas driving the most (or least) revenue and total orders.
+
+---
+
+## 📈 Power BI Dashboard
+The insights from the SQL analysis are visualized in an interactive dashboard created with Power BI.
+
+### Dashboard Sections
+1.  **Overview Page:** Displays main KPIs and overall sales metrics.
+2.  **Category Analysis:** Breakdown of sales by pizza type and size preference.
+3.  **Top & Bottom Performers:** Highlights best and worst performing pizzas by revenue and orders.
+4.  **Time Trends:** Detailed look at weekly and monthly order insights.
+
+
+
+### 📍 Key Insights
+A few actionable takeaways derived from the analysis:
+
+* ✅ **Classic** pizzas contributed the highest share of total revenue, suggesting they are the core offering.
+* ✅ **Large-sized** pizzas were the most preferred by customers, indicating a preference for value or group orders.
+* ✅ **Friday and Saturday** recorded the highest sales volume, confirming peak weekend business.
+* ✅ **Promotional opportunities** exist during mid-week sales dips (e.g., Tuesday-Thursday) to boost volume.
+
+---
+
+## ⚙️ Tools & Technologies
+| Tool | Purpose |
+| :--- | :--- |
+| **SQL Server** | Data extraction, cleaning, and aggregation for analytical purposes. |
+| **Power BI** | Data visualisation, dashboard creation, and interactive reporting. |
+| **Excel / CSV** | Initial data cleaning and preprocessing. |
+
+### 🧰 Skills Demonstrated
+* Data Cleaning & Transformation
+* SQL Aggregations, Grouping, and Query Optimisation
+* Data Visualisation using Power BI
+* KPI & Metric Calculation
+* Analytical Thinking & Insight Derivation
+
+---
+
+## 💼 Project Files
+| File Name | Description |
+| :--- | :--- |
+| `pizza_sales.csv` | The raw dataset used for the analysis. |
+| `pizza_sales.sql` | All SQL analysis queries used to aggregate the data. |
+| `pizza_sales_analysis.pbix` | The Power BI dashboard file for interactive visualization. |
+| `README.md` | This project documentation. |
+
+---
+
+## 📬 Contact
+**Author:** Megha Karn
+
+📧 **karnmegha425@gmail.com**
+
+🔗 **www.linkedin.com/in/meghakarn2001**
+
+📂 **[GitHub](https://github.com/Megha-karn?tab=repositories)**
+
+⭐ If you found this project helpful, consider giving it a star on GitHub! ⭐
